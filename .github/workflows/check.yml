@@ -1,5 +1,5 @@
-# Check the fleet inventory against the contract of the pinned tools (.cicd), on every pull
-# request and on main. Read-only token, no secrets.
+# Check the fleet inventory and the rollouts against the contract of the pinned tools (.cicd), on
+# every pull request and on main. Read-only token, no secrets.
 
 name: check
 
@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   inventory:
-    name: fleet.toml (schema 2)
+    name: fleet.toml (schema 2) and rollouts
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
@@ -23,3 +23,5 @@ jobs:
           persist-credentials: false
       - name: Check fleet.toml against .cicd/fleet/lib/check-inventory.py
         run: python3 .cicd/fleet/lib/check-inventory.py fleet.toml
+      - name: Check every rollout against .cicd/fleet/lib/check-rollout.py
+        run: for r in rollouts/*/*/; do python3 .cicd/fleet/lib/check-rollout.py "$r" || exit 1; done
