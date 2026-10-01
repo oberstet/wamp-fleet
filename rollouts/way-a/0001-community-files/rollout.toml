@@ -1,0 +1,28 @@
+# Record of a rollout. (The format is provisional until the migration runner in
+# wamp-proto/wamp-cicd reads it; today it is documentation that happens to be TOML.)
+
+name        = "0001-community-files"
+cohort      = "way-a"
+description = """
+Pin the shared tooling (.cicd, .ai) to one commit pair, deploy the shared contribution files
+(CONTRIBUTING.md, the pull request template, .audit/README.md), seed a per-repository
+DEVELOPMENT.md, add the CI drift check, and adopt the Way-A workflow (import .cicd/workflow.just).
+"""
+
+# What "applied" means for this rollout: the repository's default branch pins exactly these
+# commits, and `bash .cicd/scripts/community-files.sh check .` passes.
+[pins]
+cicd = "38ded6a"
+ai   = "64f2e5d"
+
+# Applied by hand, as rollout `wave1-2026-09`, before rollouts had an apply.sh: so there is none
+# here. issue.md is the text each repository's rollout issue was rendered from.
+[applied]
+by     = "hand (rollout wave1-2026-09)"
+landed = 2026-09-29
+
+[[landed]]
+repo   = "wamp-proto"
+issue  = 574
+pr     = 575
+commit = "5003b72"

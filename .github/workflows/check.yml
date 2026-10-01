@@ -1,0 +1,25 @@
+# Check the fleet inventory against the contract of the pinned tools (.cicd), on every pull
+# request and on main. Read-only token, no secrets.
+
+name: check
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  inventory:
+    name: fleet.toml (schema 2)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          submodules: recursive
+          persist-credentials: false
+      - name: Check fleet.toml against .cicd/fleet/lib/check-inventory.py
+        run: python3 .cicd/fleet/lib/check-inventory.py fleet.toml
