@@ -1,0 +1,30 @@
+# GENERATED - do not edit; regenerate from the private inventory.
+schema = 2
+
+[[cohort]]
+name        = "way-a"
+description = "follows the Way-A workflow: .ai, .cicd and .fleet pinned, workflow.just imported"
+
+[[repo]]
+name           = "wamp-proto"
+slug           = "wamp-proto/wamp-proto"
+default_branch = "master"
+cohorts        = ["way-a"]
+
+[[repo]]
+name           = "wamp-cicd"
+slug           = "wamp-proto/wamp-cicd"
+default_branch = "main"
+cohorts        = ["way-a"]
+
+[[repo]]
+name           = "wamp-ai"
+slug           = "wamp-proto/wamp-ai"
+default_branch = "main"
+cohorts        = ["way-a"]
+
+[[repo]]
+name           = "wamp-site-gen"
+slug           = "wamp-proto/wamp-site-gen"
+default_branch = "main"
+cohorts        = ["way-a"]
