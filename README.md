@@ -75,7 +75,7 @@ the same with the tooling pins (`layout.sh` in each rollout directory).
 | rollout | what |
 |---|---|
 | [`way-a/0001-community-files`](rollouts/way-a/0001-community-files/) | the shared tooling pins, the shared contribution files, the Way-A workflow. Applied by hand on 2026-09-29 where the record in its `rollout.toml` says so, and adopted there; applied by `apply.sh` elsewhere. |
-| [`way-a/0002-fleet-submodule`](rollouts/way-a/0002-fleet-submodule/) | the definition pinned (`.fleet/`) and `.waves/` in every member, and the CI check that fails when a member lacks a rollout its pinned definition holds. |
+| [`way-a/0002-fleet-submodule`](rollouts/way-a/0002-fleet-submodule/) | both tooling repositories at their heads as of the rollout, the definition pinned (`.fleet/`) and `.waves/` in every member, and the CI check that fails when a member lacks a rollout its pinned definition holds. |
 
 Who is behind, per repository and cohort: `just -f .cicd/fleet/fleet.just fleet-next`.
 

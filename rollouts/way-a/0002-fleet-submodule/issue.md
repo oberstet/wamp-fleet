@@ -23,10 +23,12 @@ repository, applied to each member the same way, and recorded in the member itse
    (which definition commit, which script, which issue, when). Where
    `way-a/0001-community-files` was applied by hand in September, its marker is written here too,
    after its check passes.
-3. **wamp-proto/wamp-cicd pinned at `8465a48`** (`.cicd`): the version of the shared tooling with
-   the lag check (and with `just land` for branches that change the tooling pins, and the audit
-   file that `just new-branch` no longer forgets). The shared community files are re-deployed
-   from its templates.
+3. **Both tooling repositories pinned at their heads as of this rollout**, the same pair in every
+   member: wamp-proto/wamp-cicd at `1378b0b` (`.cicd`) - the shared tooling with the lag check,
+   with `just land` for branches that change the tooling pins, and the audit file that
+   `just new-branch` no longer forgets - and wamp-proto/wamp-ai at `149df20` (`.ai`; its hooks
+   and policy files are unchanged, it adds documentation). The shared community files are
+   re-deployed from wamp-cicd's templates.
 4. **Lag check in CI**: a step directly after the community files check,
    `fleet/lag-check.sh --slug @@SLUG@@` from the pinned wamp-cicd. It fails when a rollout of
    this repository's cohorts in the pinned definition has no marker in `.waves/`: a repository
@@ -45,7 +47,8 @@ No behaviour change in the software itself.
 - [ ] The definition is pinned at a commit of wamp-proto/wamp-fleet's `main` (`.fleet`; or
       `deps.toml`).
 - [ ] `.waves/way-a/0001-community-files.toml` and `.waves/way-a/0002-fleet-submodule.toml` exist.
-- [ ] wamp-cicd is pinned at `8465a48` or later; the community files check passes.
+- [ ] wamp-cicd is pinned at `1378b0b` or later and wamp-ai at `149df20` or later; the community
+      files check passes.
 - [ ] The lag check passes locally and in CI.
 - [ ] `just where` works.
 - [ ] CI green; landed as a maintainer-signed change.

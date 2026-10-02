@@ -124,6 +124,22 @@ set_dep() {
     git add deps.toml
 }
 
+# sub_at_or_after <path> <commit>: for check.sh - prints a reason and returns 1 unless the
+# SUBMODULE <path> is pinned at <commit> or later. The pin is read from the index, so the answer
+# is the same before and after a commit.
+sub_at_or_after() {
+    local path="$1" want="$2" have
+    have="$(git ls-files -s -- "${path}" | awk '$1=="160000"{print $2}')"
+    [ -n "${have}" ] || { echo "${path} is not a submodule here"; return 1; }
+    if ! git -C "${path}" rev-parse -q --verify "${have}^{commit}" >/dev/null 2>&1 \
+       || [ "$(git -C "${path}" rev-parse --show-toplevel 2>/dev/null)" != "$(pwd)/${path}" ]; then
+        echo "${path} is not initialised in this clone (git submodule update --init ${path})"; return 1
+    fi
+    git -C "${path}" rev-parse -q --verify "${want}^{commit}" >/dev/null 2>&1 \
+        || { echo "${path} is pinned to ${have:0:7}, which is before ${want:0:7} (that commit is not in its history)"; return 1; }
+    at_or_after "${path}" "${want}" "${have}" || { echo "${path} is pinned to ${have:0:7}, which is not at or after ${want:0:7}"; return 1; }
+}
+
 # dep_at_or_after <name> <commit>: for check.sh - prints a reason and returns 1 if not.
 dep_at_or_after() {
     local name="$1" want="$2" d=".deps/$1" have
