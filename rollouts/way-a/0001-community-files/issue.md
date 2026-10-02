@@ -35,6 +35,14 @@ defined in `fleet.toml` in wamp-proto/wamp-cicd.
    @@WAYA_NOTE@@
 4. A changelog entry referencing this issue, where the repository keeps a changelog.
 
+**In wamp-proto/wamp-cicd and wamp-proto/wamp-ai** - the two repositories every other one pins,
+which therefore carry no submodules
+([TOOLING-STRUCTURE.md](https://github.com/wamp-proto/wamp-cicd/blob/main/TOOLING-STRUCTURE.md)) -
+the pins are entries in `deps.toml`, checked out into the gitignored `.deps/` by `just deps`,
+instead of the `.cicd` and `.ai` submodules; wamp-cicd imports its own `workflow.just`, wamp-ai
+the one in `.deps/wamp-cicd`. The community files, `DEVELOPMENT.md`, the drift check and the
+workflow recipes are the same.
+
 No behaviour change in the software itself.
 
 ## Acceptance criteria

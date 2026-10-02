@@ -6,9 +6,11 @@ submodule, the record of applied rollouts in .waves/, and a CI check that fails 
 lacks a rollout its pinned definition holds. Brings .cicd to the tools version that has the check.
 """
 
-# What "applied" means for this rollout (check.sh): .cicd is pinned at this commit or a later one
-# (the first with fleet/lag-check.sh), the community files still match its templates, and every
-# workflow that runs the community files check runs the lag check too.
-# The .fleet submodule and the .waves/ markers are written by the runner, not by apply.sh.
+# What "applied" means for this rollout (check.sh): wamp-cicd is pinned at this commit or a later
+# one (the lag check that finds the pinned definition in every layout), the community files
+# still match its templates, and every workflow that runs the community files check runs the lag
+# check too.
+# The definition's pin (.fleet, or deps.toml in a tooling source) and the .waves/ markers are
+# written by the runner, not by apply.sh.
 [pins]
-cicd = "d9c45e5baca0aeed34a59d87648bd3c6d033a382"
+cicd = "8465a483881d54842f1702b469302687d957c67d"
