@@ -6,11 +6,11 @@
 # talks to a forge, and needs no credentials. Re-runnable: a second run changes nothing.
 #
 # What it does:
-#   1. wamp-cicd at the commit in rollout.toml [pins] (never moved backwards) - the tools version
-#      whose lag check finds the pinned definition in every layout:
-#        an ordinary member   the .cicd submodule
-#        wamp-ai              deps.toml / .deps/wamp-cicd, and the managed copies refreshed
-#        wamp-cicd            nothing to pin: it is that repository
+#   1. wamp-cicd and wamp-ai at the commits in rollout.toml [pins] (never moved backwards) - their
+#      heads as of this rollout, the same pair in every member:
+#        an ordinary member   the .cicd and .ai submodules
+#        wamp-ai              wamp-cicd in deps.toml / .deps/, and the managed copies refreshed
+#        wamp-cicd            wamp-ai in deps.toml / .deps/
 #   2. the shared community files, re-deployed from the templates of that wamp-cicd;
 #   3. the lag check as a CI step, directly after the community files check, in every workflow
 #      that runs it.
@@ -24,18 +24,20 @@ die() { echo "ERROR: $*" >&2; exit 1; }
 # shellcheck source=/dev/null
 . "${HERE}/layout.sh"
 
-# 1. The pin.
+# 1. The pins.
 case "${LAYOUT}" in
     ordinary)
         [ -e .cicd/.git ] || die ".cicd is not initialised in this clone (git submodule update --init .cicd)"
-        set_pin .cicd "${CICD_URL}" "$(pin_of cicd)" ;;
+        set_pin .cicd "${CICD_URL}" "$(pin_of cicd)"
+        set_pin .ai   "${AI_URL}"   "$(pin_of ai)" ;;
     ai)
         set_dep wamp-cicd "${CICD_URL}" "$(pin_of cicd)" .cicd
         for f in "${MANAGED_COPIES[@]}"; do
             cmp -s ".deps/wamp-cicd/${f}" "${f}" || { mkdir -p "$(dirname "${f}")"; cp -p ".deps/wamp-cicd/${f}" "${f}"; echo "  deployed   ${f} (a managed copy from .deps/wamp-cicd)"; }
             git add "${f}"
         done ;;
-    cicd) ;;
+    cicd)
+        set_dep wamp-ai "${AI_URL}" "$(pin_of ai)" .ai ;;
 esac
 [ -f "${P}fleet/lag-check.sh" ] || die "no ${P}fleet/lag-check.sh"
 

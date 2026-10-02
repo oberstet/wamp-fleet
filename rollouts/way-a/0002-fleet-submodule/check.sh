@@ -5,8 +5,9 @@
 # apply.sh as its last step. It changes nothing. Exit 0 = yes; 1 = no (each reason is printed).
 #
 # The state:
-#   1. wamp-cicd is pinned AT OR AFTER the commit in rollout.toml [pins] (the .cicd submodule;
-#      deps.toml in wamp-ai; wamp-cicd itself has it), and has fleet/lag-check.sh;
+#   1. wamp-cicd and wamp-ai are pinned AT OR AFTER the commits in rollout.toml [pins] (the
+#      .cicd and .ai submodules; in a tooling source the other one's entry in deps.toml), and
+#      wamp-cicd has fleet/lag-check.sh;
 #   2. the shared community files match the templates of that wamp-cicd;
 #   3. every workflow that runs the community files check runs the lag check as well.
 # Not checked here: the definition's pin and the .waves/ markers. The runner writes them, in the
@@ -19,27 +20,17 @@ no() { echo "  no: $*"; rc=1; }
 die() { echo "ERROR: $*" >&2; exit 1; }
 # shellcheck source=/dev/null
 . "${HERE}/layout.sh"
-want="$(pin_of cicd)" || no "cannot read [pins] from rollout.toml"
 
-# 1. The pin. A submodule pin is read from the index, so the answer is the same before and after
-# a commit.
+# 1. The pins.
 case "${LAYOUT}" in
     ordinary)
-        have="$(git ls-files -s -- .cicd | awk '$1=="160000"{print $2}')"
-        if [ -z "${have}" ]; then
-            no ".cicd is not a submodule here"
-        elif [ "$(git -C .cicd rev-parse --show-toplevel 2>/dev/null)" != "$(pwd)/.cicd" ] \
-             || ! git -C .cicd rev-parse -q --verify "${have}^{commit}" >/dev/null 2>&1; then
-            no ".cicd is not initialised in this clone (git submodule update --init .cicd)"
-        elif ! git -C .cicd rev-parse -q --verify "${want}^{commit}" >/dev/null 2>&1; then
-            no ".cicd is pinned to ${have:0:7}, which is before ${want:0:7} (that commit is not in its history)"
-        elif ! at_or_after .cicd "${want}" "${have}"; then
-            no ".cicd is pinned to ${have:0:7}, which is not at or after ${want:0:7}"
-        fi ;;
+        why="$(sub_at_or_after .cicd "$(pin_of cicd)")" || no "${why}"
+        why="$(sub_at_or_after .ai   "$(pin_of ai)")"   || no "${why}" ;;
     ai)
-        why="$(dep_at_or_after wamp-cicd "${want}")" || no "${why}"
+        why="$(dep_at_or_after wamp-cicd "$(pin_of cicd)")" || no "${why}"
         for f in "${MANAGED_COPIES[@]}"; do cmp -s ".deps/wamp-cicd/${f}" "${f}" || no "${f} is not the copy of .deps/wamp-cicd/${f}"; done ;;
-    cicd) ;;
+    cicd)
+        why="$(dep_at_or_after wamp-ai "$(pin_of ai)")" || no "${why}" ;;
 esac
 [ -f "${P}fleet/lag-check.sh" ] || no "no ${P}fleet/lag-check.sh"
 
