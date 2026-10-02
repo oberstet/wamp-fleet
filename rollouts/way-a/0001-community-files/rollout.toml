@@ -1,5 +1,6 @@
-# Record of a rollout. (The format is provisional until the migration runner in
-# wamp-proto/wamp-cicd reads it; today it is documentation that happens to be TOML.)
+# way-a/0001-community-files. First applied by hand (the [applied] record below); check.sh and
+# apply.sh came later, so that the runner in wamp-proto/wamp-cicd can adopt it where it is in
+# place and apply it where it is not.
 
 name        = "0001-community-files"
 cohort      = "way-a"
@@ -9,14 +10,20 @@ Pin the shared tooling (.cicd, .ai) to one commit pair, deploy the shared contri
 DEVELOPMENT.md, add the CI drift check, and adopt the Way-A workflow (import .cicd/workflow.just).
 """
 
-# What "applied" means for this rollout: the repository's default branch pins exactly these
-# commits, and `bash .cicd/scripts/community-files.sh check .` passes.
+# What "applied" means for this rollout (check.sh): .cicd and .ai are pinned at these commits or
+# later ones, `bash .cicd/scripts/community-files.sh check .` passes, the justfile imports
+# .cicd/workflow.just, and a CI workflow runs the community files check.
+#
+# Not for the two sources of the shared tooling (wamp-proto/wamp-cicd, wamp-proto/wamp-ai):
+# apply.sh refuses them. Neither can pin itself, and neither may carry submodules: every member
+# pins them, so a submodule inside them would be cloned by every recursive checkout of every
+# member - and .fleet inside them would nest one level deeper with every bump.
 [pins]
-cicd = "38ded6a"
-ai   = "64f2e5d"
+cicd = "38ded6a15062348f180cf31a09370c3e63cbf5d0"
+ai   = "64f2e5da554005b93855d0daf70b8a61b187d26b"
 
-# Applied by hand, as rollout `wave1-2026-09`, before rollouts had an apply.sh: so there is none
-# here. issue.md is the text each repository's rollout issue was rendered from.
+# The members it was applied to by hand, as rollout `wave1-2026-09`, before it had an apply.sh.
+# issue.md is the text each repository's rollout issue was rendered from.
 [applied]
 by     = "hand (rollout wave1-2026-09)"
 landed = 2026-09-29

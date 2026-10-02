@@ -1,0 +1,30 @@
+# Fleet checks: what every member of the `way-a` cohort verifies in CI. Added by the rollout
+# way-a/0001-community-files for a repository that had no workflow to put them in; later rollouts
+# add their checks here. Read-only token, no secrets.
+
+name: fleet
+
+on:
+  pull_request:
+  push:
+    branches: [@@MAIN@@]
+
+permissions:
+  contents: read
+
+jobs:
+  fleet:
+    name: Fleet checks
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          submodules: recursive
+          persist-credentials: false
+
+      # Shared community files (CONTRIBUTING.md, PR template, .audit/README.md) must be
+      # byte-identical to .cicd/templates/ at the pinned wamp-cicd commit (wamp-cicd#16).
+      - name: Community files in sync with .cicd/templates/
+        run: bash .cicd/scripts/community-files.sh check .
