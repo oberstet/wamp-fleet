@@ -10,17 +10,21 @@ Pin the shared tooling (.cicd, .ai) to one commit pair, deploy the shared contri
 DEVELOPMENT.md, add the CI drift check, and adopt the Way-A workflow (import .cicd/workflow.just).
 """
 
-# What "applied" means for this rollout (check.sh): .cicd and .ai are pinned at these commits or
-# later ones, `bash .cicd/scripts/community-files.sh check .` passes, the justfile imports
-# .cicd/workflow.just, and a CI workflow runs the community files check.
-#
-# Not for the two sources of the shared tooling (wamp-proto/wamp-cicd, wamp-proto/wamp-ai):
-# apply.sh refuses them. Neither can pin itself, and neither may carry submodules: every member
-# pins them, so a submodule inside them would be cloned by every recursive checkout of every
-# member - and .fleet inside them would nest one level deeper with every bump.
+# What "applied" means for this rollout (check.sh): the tooling is pinned at these commits or
+# later ones, the community files match wamp-cicd's templates, the justfile imports
+# workflow.just, and a CI workflow runs the community files check.
 [pins]
 cicd = "38ded6a15062348f180cf31a09370c3e63cbf5d0"
 ai   = "64f2e5da554005b93855d0daf70b8a61b187d26b"
+
+# The two tooling sources (wamp-proto/wamp-cicd, wamp-proto/wamp-ai) take this rollout WITHOUT
+# submodules: every other repository pins them, so a submodule inside them would be cloned by
+# every recursive checkout of every repository. Their pins are in deps.toml, their checkouts in
+# the gitignored .deps/ (wamp-cicd: TOOLING-STRUCTURE.md). wamp-cicd pins wamp-ai there, wamp-ai
+# pins wamp-cicd - at the first commit that has what a tooling source needs (scripts/deps.sh,
+# the lag check that finds the definition under .deps/).
+[pins.tooling]
+cicd = "8465a483881d54842f1702b469302687d957c67d"
 
 # The members it was applied to by hand, as rollout `wave1-2026-09`, before it had an apply.sh.
 # issue.md is the text each repository's rollout issue was rendered from.

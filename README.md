@@ -55,6 +55,7 @@ rollouts/<cohort>/<NNNN>-<name>/
     apply.sh         makes the change in a member repository, on the rollout branch; re-runnable;
                      needs no credentials; never commits
     check.sh         changes nothing; exit 0 if the repository already is in the rollout's state
+    layout.sh        (where needed) what apply.sh and check.sh share
     issue.md         the text of the rollout issue filed in each repository
 ```
 
@@ -65,10 +66,16 @@ A rollout is applied to one member by the runner, wamp-cicd's `fleet/apply-rollo
 **adopted** (its marker written) when its `check.sh` passes. Once a marker anywhere names a
 rollout, the rollout is not edited any more.
 
+A member that every other repository pins as a submodule - wamp-cicd and wamp-ai, in the `wamp`
+fleet - carries no submodules itself
+([TOOLING-STRUCTURE.md](https://github.com/wamp-proto/wamp-cicd/blob/main/TOOLING-STRUCTURE.md)).
+There the runner pins this repository in `deps.toml` instead of as `.fleet/`, and the rollouts do
+the same with the tooling pins (`layout.sh` in each rollout directory).
+
 | rollout | what |
 |---|---|
 | [`way-a/0001-community-files`](rollouts/way-a/0001-community-files/) | the shared tooling pins, the shared contribution files, the Way-A workflow. Applied by hand on 2026-09-29 where the record in its `rollout.toml` says so, and adopted there; applied by `apply.sh` elsewhere. |
-| [`way-a/0002-fleet-submodule`](rollouts/way-a/0002-fleet-submodule/) | `.fleet/` and `.waves/` in every member, and the CI check that fails when a member lacks a rollout its pinned definition holds. |
+| [`way-a/0002-fleet-submodule`](rollouts/way-a/0002-fleet-submodule/) | the definition pinned (`.fleet/`) and `.waves/` in every member, and the CI check that fails when a member lacks a rollout its pinned definition holds. |
 
 Who is behind, per repository and cohort: `just -f .cicd/fleet/fleet.just fleet-next`.
 
