@@ -5,25 +5,26 @@ the fleet, in which cohorts, and the rollouts applied to them.
 
 The tools that read this repository are in
 [wamp-proto/wamp-cicd `fleet/`](https://github.com/wamp-proto/wamp-cicd/tree/main/fleet)
-(pinned here as `.cicd/`); this repository holds only the definition.
+(pinned here as `.cicd/`); this repository holds only the definition. The rollout records under
+`rollouts/` are written by the fleet driver (the AAIARE Fleet Manager).
 
 ## Terms
 
 - **Fleet** — all the repositories managed together. Every repository belongs to exactly one fleet.
 - **Cohort** — a named subset of the fleet. A repository may be in several, or in none (then it
   takes part in nothing).
-- **Rollout** — one batched change applied to one cohort: a desired state, and how to reach it.
-  Once applied it is not edited; a change is a new rollout.
-- **Wave** — one run of a rollout on its cohort. A member the wave has not reached yet is simply
-  behind; it does not change cohorts.
+- **Aspect** — a desired state of a repository, defined once in the fleet's aspect repository
+  (e.g. `python-package`). A member declares the aspects it has in its `aspects.toml`.
+- **Rollout** — one aspect applied to the members that declare it, recorded in one file. Once
+  landed the record is not edited; a change is a new rollout.
 
 ## What is here
 
 | path | what |
 |---|---|
 | [`fleet.toml`](fleet.toml) | the inventory: the cohorts, and every repository with its GitHub slug, default branch and cohorts. **Generated - do not edit by hand.** |
-| [`rollouts/<cohort>/<NNNN>-<name>/`](rollouts/) | one directory per rollout, in order. The ordered list of a cohort's rollouts **is** this directory. |
-| `.ai/`, `.cicd/` | the shared AI policy and CI/CD tooling, as in every repository of the fleet. The `.cicd/` pin is the tools version this fleet's rollouts are written against. |
+| `rollouts/<id>/rollout.toml` | one record per rollout, `<id>` = `YYYYMMDD-<aspect>[-N]`. |
+| `.ai/`, `.cicd/` | the shared AI policy and CI/CD tooling, as in every repository of the fleet. |
 | `.audit/` | the AI-assistance disclosure per branch. |
 
 This repository is not a member of its own fleet: it cannot contain itself.
@@ -41,7 +42,6 @@ locally:
 
 ```bash
 just check-inventory
-just check-rollouts      # every rollouts/<cohort>/<NNNN>-<name>/ is a valid rollout
 ```
 
 `fleet.toml` is generated from the maintainers' inventory and committed here. To change the
@@ -50,34 +50,26 @@ fleet's membership or cohorts, change it there and regenerate; a hand edit would
 ### A rollout
 
 ```
-rollouts/<cohort>/<NNNN>-<name>/
-    rollout.toml     what it does, and what "applied" means
-    apply.sh         makes the change in a member repository, on the rollout branch; re-runnable;
-                     needs no credentials; never commits
-    check.sh         changes nothing; exit 0 if the repository already is in the rollout's state
-    layout.sh        (where needed) what apply.sh and check.sh share
-    issue.md         the text of the rollout issue filed in each repository
+rollouts/<id>/rollout.toml      <id> = YYYYMMDD-<aspect>[-N]
 ```
 
-`<NNNN>` orders the rollouts of a cohort, and nothing is skipped: a member gets them in order.
-A rollout is applied to one member by the runner, wamp-cicd's `fleet/apply-rollout.sh`: it runs
-`apply.sh`, pins this repository in the member as `.fleet/`, writes the marker
-`.waves/<cohort>/<NNNN>-<name>.toml`, and makes one commit. An earlier rollout without a marker is
-**adopted** (its marker written) when its `check.sh` passes. Once a marker anywhere names a
-rollout, the rollout is not edited any more.
+The record says what was rolled out, from which inputs, and how it went:
 
-A member that every other repository pins as a submodule - wamp-cicd and wamp-ai, in the `wamp`
-fleet - carries no submodules itself
-([TOOLING-STRUCTURE.md](https://github.com/wamp-proto/wamp-cicd/blob/main/TOOLING-STRUCTURE.md)).
-There the runner pins this repository in `deps.toml` instead of as `.fleet/`, and the rollouts do
-the same with the tooling pins (`layout.sh` in each rollout directory).
+- the aspect, the revision of the aspect repository it was computed with, and the commit of the
+  maintainers' inventory the member set was read from;
+- per member: the base commit, the files changed and the exact change (with its sha256), the
+  issue and its branch (`fix_<issue>`), the commit that applied the change, the maintainer's land
+  merge, and a **convergence proof** - the aspect re-checked on the default branch after the land
+  (an empty change = converged);
+- the fleet issue that tracked the rollout, and its status:
+  `planned` -> `issues-filed` -> `executed` -> `landed` -> `converged`.
 
-| rollout | what |
-|---|---|
-| [`way-a/0001-community-files`](rollouts/way-a/0001-community-files/) | the shared tooling pins, the shared contribution files, the Way-A workflow. Applied by hand on 2026-09-29 where the record in its `rollout.toml` says so, and adopted there; applied by `apply.sh` elsewhere. |
-| [`way-a/0002-fleet-submodule`](rollouts/way-a/0002-fleet-submodule/) | both tooling repositories at their heads as of the rollout, the definition pinned (`.fleet/`) and `.waves/` in every member, and the CI check that fails when a member lacks a rollout its pinned definition holds. |
+The fleet driver writes it as the rollout moves through its human gates - filing the issues,
+cutting the branches, landing - which a maintainer does and signs. While the rollout runs the
+record lives on this repository's dev branch; it is landed here once the rollout is converged.
 
-Who is behind, per repository and cohort: `just -f .cicd/fleet/fleet.just fleet-next`.
+No rollout has been recorded in this fleet yet. The v1 rollouts (`rollouts/way-a/`, scripts
+applied by a runner) are in the Git history before #11.
 
 ## Using it
 
