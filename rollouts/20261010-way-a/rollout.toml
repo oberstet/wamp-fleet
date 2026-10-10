@@ -1,0 +1,67 @@
+schema = 1
+id = "20261010-way-a"
+aspect = "way-a"
+status = "issues-filed"
+fleet = "wamp-proto/wamp-fleet"
+fleet_issue = 14
+
+[provider]
+repo = "wamp-proto/wamp-ai"
+rev = "fb2604d2c51e14e03dfd2c5f5088a394c1030fbd"
+
+[apex]
+rev = "ace0507af1475ef4c647f49ea0e74a2e0a3a328d"
+
+[[member]]
+repo = "wamp-proto"
+slug = "wamp-proto/wamp-proto"
+issue = 579
+base = "5003b724cbf8dcf22f27e9b6a8086d3ccd62e305"
+provider_pin = "fb2604d2c51e14e03dfd2c5f5088a394c1030fbd"
+changes = ["aspects.toml", ".ai", ".cicd"]
+aspects_toml_sha256 = "c8767431dd7a01154665709b8cf147a6b4031da09f9a8116aa39a5ca96a59fca"
+changeset_sha256 = "f07e82dabfcd5ca20b8bec356a6dfa59767c9b6b83b8e850f46fc56db92710b5"
+changeset = "[{\"action\":\"submodule_pin\",\"kind\":\"submodule_update\",\"path\":\".ai\",\"rev\":\"fb2604d2c51e14e03dfd2c5f5088a394c1030fbd\",\"url\":\"https://github.com/wamp-proto/wamp-ai.git\"},{\"action\":\"submodule_pin\",\"kind\":\"submodule_update\",\"path\":\".cicd\",\"rev\":\"e40ae1e3452d521840bfd5fe7a1341d620dcc60c\",\"url\":\"https://github.com/wamp-proto/wamp-cicd.git\"}]"
+
+[[member]]
+repo = "wamp-cicd"
+slug = "wamp-proto/wamp-cicd"
+issue = 80
+base = "e40ae1e3452d521840bfd5fe7a1341d620dcc60c"
+provider_pin = "fb2604d2c51e14e03dfd2c5f5088a394c1030fbd"
+changes = ["aspects.toml", "deps.toml"]
+aspects_toml_sha256 = "82bafaecccda2639bbf70b236009310c1e5a5e0bcf8a0ca9f342bb6eac29bf9b"
+changeset_sha256 = "4ef38838ab386a419839bfaf5906752fd4475ede434eae95b2bca127e05dfd3f"
+changeset = "[{\"action\":\"deps_pin\",\"commit\":\"fb2604d2c51e14e03dfd2c5f5088a394c1030fbd\",\"kind\":\"file_modify\",\"name\":\"wamp-ai\",\"path\":\"deps.toml\",\"url\":\"https://github.com/wamp-proto/wamp-ai.git\"}]"
+
+[[member]]
+repo = "wamp-ai"
+slug = "wamp-proto/wamp-ai"
+issue = 35
+base = "fb2604d2c51e14e03dfd2c5f5088a394c1030fbd"
+changes = ["aspects.toml"]
+aspects_toml_sha256 = "c67eb589827171b7be66674487412222f94fc429cbfe7d29928c6899604f8d25"
+changeset_sha256 = "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+changeset = "[]"
+
+[[member]]
+repo = "wamp-site-gen"
+slug = "wamp-proto/wamp-site-gen"
+issue = 6
+base = "b0373e3fd51c042ed83870f4fd5e495f9a04021e"
+provider_pin = "fb2604d2c51e14e03dfd2c5f5088a394c1030fbd"
+changes = ["aspects.toml", ".ai", ".cicd"]
+aspects_toml_sha256 = "c8767431dd7a01154665709b8cf147a6b4031da09f9a8116aa39a5ca96a59fca"
+changeset_sha256 = "f07e82dabfcd5ca20b8bec356a6dfa59767c9b6b83b8e850f46fc56db92710b5"
+changeset = "[{\"action\":\"submodule_pin\",\"kind\":\"submodule_update\",\"path\":\".ai\",\"rev\":\"fb2604d2c51e14e03dfd2c5f5088a394c1030fbd\",\"url\":\"https://github.com/wamp-proto/wamp-ai.git\"},{\"action\":\"submodule_pin\",\"kind\":\"submodule_update\",\"path\":\".cicd\",\"rev\":\"e40ae1e3452d521840bfd5fe7a1341d620dcc60c\",\"url\":\"https://github.com/wamp-proto/wamp-cicd.git\"}]"
+
+[[member]]
+repo = "wamp-fleet"
+slug = "wamp-proto/wamp-fleet"
+issue = 13
+base = "85d1f1b052178daf6b91ee8df3f47c29d3f0aca8"
+provider_pin = "fb2604d2c51e14e03dfd2c5f5088a394c1030fbd"
+changes = ["aspects.toml", ".ai", ".cicd"]
+aspects_toml_sha256 = "3c9516323c489bedf78347c9fad459317a212ca33303088b78d267bc075edabb"
+changeset_sha256 = "f07e82dabfcd5ca20b8bec356a6dfa59767c9b6b83b8e850f46fc56db92710b5"
+changeset = "[{\"action\":\"submodule_pin\",\"kind\":\"submodule_update\",\"path\":\".ai\",\"rev\":\"fb2604d2c51e14e03dfd2c5f5088a394c1030fbd\",\"url\":\"https://github.com/wamp-proto/wamp-ai.git\"},{\"action\":\"submodule_pin\",\"kind\":\"submodule_update\",\"path\":\".cicd\",\"rev\":\"e40ae1e3452d521840bfd5fe7a1341d620dcc60c\",\"url\":\"https://github.com/wamp-proto/wamp-cicd.git\"}]"
