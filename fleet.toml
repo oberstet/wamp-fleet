@@ -2,8 +2,16 @@
 schema = 2
 
 [[cohort]]
+name        = "aspect-repo"
+description = "aspect aspect-repo (membership; defined in its aspect repo)"
+
+[[cohort]]
+name        = "fleet-repo"
+description = "aspect fleet-repo (membership; defined in its aspect repo)"
+
+[[cohort]]
 name        = "way-a"
-description = "follows the Way-A workflow: .ai, .cicd and .fleet pinned, workflow.just imported"
+description = "aspect way-a (membership; defined in its aspect repo)"
 
 [[repo]]
 name           = "wamp-proto"
@@ -21,10 +29,16 @@ cohorts        = ["way-a"]
 name           = "wamp-ai"
 slug           = "wamp-proto/wamp-ai"
 default_branch = "main"
-cohorts        = ["way-a"]
+cohorts        = ["way-a", "aspect-repo"]
 
 [[repo]]
 name           = "wamp-site-gen"
 slug           = "wamp-proto/wamp-site-gen"
 default_branch = "main"
 cohorts        = ["way-a"]
+
+[[repo]]
+name           = "wamp-fleet"
+slug           = "wamp-proto/wamp-fleet"
+default_branch = "main"
+cohorts        = ["way-a", "fleet-repo"]
