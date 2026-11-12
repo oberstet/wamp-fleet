@@ -1,7 +1,15 @@
 # Materialized aspect membership for this repository.
 # Rendered from the apex inventory (all.yml); NOT a source of truth.
-aspects = ["way-a", "fleet-repo"]
+aspects = ["way-a", "gh-actions", "fleet-repo"]
 
 [provider.way-a]
+repo = "wamp-proto/wamp-ai"
+path = ".ai"
+
+[provider.gh-actions]
+repo = "wamp-proto/wamp-ai"
+path = ".ai"
+
+[provider.fleet-repo]
 repo = "wamp-proto/wamp-ai"
 path = ".ai"
