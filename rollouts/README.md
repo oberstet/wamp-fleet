@@ -1,5 +1,5 @@
-<!-- Generated at each rollout close-out, from the
-     rollout.toml records in this directory. Do not edit: it is rewritten. -->
+<!-- Generated at each rollout close-out, from the rollout.toml records in this
+     directory. Do not edit: it is rewritten. -->
 
 # Rollouts
 
@@ -10,4 +10,5 @@ proof.
 
 | rollout | aspect | status | fleet issue | members | changes | aspect rev |
 |---|---|---|---|---|---|---|
+| [`20261112-gh-actions`](20261112-gh-actions/rollout.toml) | `gh-actions` | converged | [#22](https://github.com/wamp-proto/wamp-fleet/issues/22) | [wamp-proto#583](https://github.com/wamp-proto/wamp-proto/issues/583), [wamp-cicd#98](https://github.com/wamp-proto/wamp-cicd/issues/98), [wamp-site-gen#13](https://github.com/wamp-proto/wamp-site-gen/issues/13), [wamp-fleet#21](https://github.com/wamp-proto/wamp-fleet/issues/21) | `.ai`, `.github/workflows/build-and-test.yml`, `.github/workflows/check.yml`, `.github/workflows/deploy-to-gh-pages.yml`, `.github/workflows/publish-site.yaml`, `aspects.toml`, `deps.toml` | `ff7eb5d8c` |
 | [`20261010-way-a`](20261010-way-a/rollout.toml) | `way-a` | converged | [#14](https://github.com/wamp-proto/wamp-fleet/issues/14) | [wamp-proto#579](https://github.com/wamp-proto/wamp-proto/issues/579), [wamp-cicd#80](https://github.com/wamp-proto/wamp-cicd/issues/80), [wamp-ai#35](https://github.com/wamp-proto/wamp-ai/issues/35), [wamp-site-gen#6](https://github.com/wamp-proto/wamp-site-gen/issues/6), [wamp-fleet#13](https://github.com/wamp-proto/wamp-fleet/issues/13) | `.ai`, `.cicd`, `aspects.toml`, `deps.toml` | `fb2604d2c` |
