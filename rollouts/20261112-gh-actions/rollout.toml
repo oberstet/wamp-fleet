@@ -1,0 +1,57 @@
+schema = 1
+id = "20261112-gh-actions"
+aspect = "gh-actions"
+status = "issues-filed"
+fleet = "wamp-proto/wamp-fleet"
+fleet_issue = 22
+
+[provider]
+repo = "wamp-proto/wamp-ai"
+rev = "ff7eb5d8c5fa44a48ff1cb7d3597dd508e831f6c"
+
+[apex]
+rev = "5726cf8517eb5dfb46d7e515df6db77a1675c3cd"
+
+[[member]]
+repo = "wamp-proto"
+slug = "wamp-proto/wamp-proto"
+issue = 583
+base = "2e5127fdceb1194a5ab31450417b12cce6808742"
+provider_pin = "ff7eb5d8c5fa44a48ff1cb7d3597dd508e831f6c"
+changes = ["aspects.toml", ".ai", ".github/workflows/build-and-test.yml", ".github/workflows/deploy-to-gh-pages.yml"]
+aspects_toml_sha256 = "de6ed99ab8db55027396b838fe9839089df0d06b7d4e02d6ce61fb21bbe70950"
+changeset_sha256 = "bb55e7348a4453cf7f229b772c928c0fc49ba65e6ee6b04913143cf80ceac10a"
+changeset = "[{\"action\":\"line_replace\",\"kind\":\"file_modify\",\"line\":13,\"new\":\"        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1\",\"old\":\"        uses: actions/checkout@v4\",\"path\":\".github/workflows/build-and-test.yml\"},{\"action\":\"line_replace\",\"kind\":\"file_modify\",\"line\":45,\"new\":\"        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1\",\"old\":\"        uses: actions/checkout@v4\",\"path\":\".github/workflows/deploy-to-gh-pages.yml\"},{\"action\":\"line_replace\",\"kind\":\"file_modify\",\"line\":103,\"new\":\"        uses: JamesIves/github-pages-deploy-action@fa24774553152dd7873cd16ebd8d959b010c5445 # v4.9.0\",\"old\":\"        uses: JamesIves/github-pages-deploy-action@v4\",\"path\":\".github/workflows/deploy-to-gh-pages.yml\"}]"
+
+[[member]]
+repo = "wamp-cicd"
+slug = "wamp-proto/wamp-cicd"
+issue = 98
+base = "bac1018827461c1b3abba8bfba470c06951a74a9"
+provider_pin = "ff7eb5d8c5fa44a48ff1cb7d3597dd508e831f6c"
+changes = ["aspects.toml", "deps.toml"]
+aspects_toml_sha256 = "438aabfed5a4befc4bf81009ae5261e5a7d7aefb1ce4b07aa6413e7c6c90a342"
+changeset_sha256 = "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+changeset = "[]"
+
+[[member]]
+repo = "wamp-site-gen"
+slug = "wamp-proto/wamp-site-gen"
+issue = 13
+base = "29ebc868958f428a7b34a77848b807fd5fcec74e"
+provider_pin = "ff7eb5d8c5fa44a48ff1cb7d3597dd508e831f6c"
+changes = ["aspects.toml", ".ai", ".github/workflows/publish-site.yaml"]
+aspects_toml_sha256 = "de6ed99ab8db55027396b838fe9839089df0d06b7d4e02d6ce61fb21bbe70950"
+changeset_sha256 = "b85cac99e8e0ce3085dc848070c32b892a95d258153a10c6c1274a65afde8b38"
+changeset = "[{\"action\":\"line_replace\",\"kind\":\"file_modify\",\"line\":17,\"new\":\"      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1\",\"old\":\"      - uses: actions/checkout@v5\",\"path\":\".github/workflows/publish-site.yaml\"},{\"action\":\"line_replace\",\"kind\":\"file_modify\",\"line\":23,\"new\":\"      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1\",\"old\":\"      - uses: actions/checkout@v5\",\"path\":\".github/workflows/publish-site.yaml\"},{\"action\":\"line_replace\",\"kind\":\"file_modify\",\"line\":91,\"new\":\"        uses: JamesIves/github-pages-deploy-action@fa24774553152dd7873cd16ebd8d959b010c5445 # v4.9.0\",\"old\":\"        uses: JamesIves/github-pages-deploy-action@v4\",\"path\":\".github/workflows/publish-site.yaml\"}]"
+
+[[member]]
+repo = "wamp-fleet"
+slug = "wamp-proto/wamp-fleet"
+issue = 21
+base = "6bb0aa9545fb054a2d1f7f3f282bc2ef91ad9661"
+provider_pin = "ff7eb5d8c5fa44a48ff1cb7d3597dd508e831f6c"
+changes = ["aspects.toml", ".ai", ".github/workflows/check.yml"]
+aspects_toml_sha256 = "e403fb337e60ba2f736550f4235aba9ed9697c65fd67c7df9fdb2cdb0ae3067c"
+changeset_sha256 = "92a00d0c4b8a3ec2bf1f0c12466afd4265cfde605dae6ef78205d55910b5f125"
+changeset = "[{\"action\":\"line_replace\",\"kind\":\"file_modify\",\"line\":20,\"new\":\"      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1\",\"old\":\"      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2\",\"path\":\".github/workflows/check.yml\"}]"
