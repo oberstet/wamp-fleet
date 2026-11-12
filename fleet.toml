@@ -10,6 +10,10 @@ name        = "fleet-repo"
 description = "aspect fleet-repo (membership; defined in its aspect repo)"
 
 [[cohort]]
+name        = "gh-actions"
+description = "aspect gh-actions (membership; defined in its aspect repo)"
+
+[[cohort]]
 name        = "way-a"
 description = "aspect way-a (membership; defined in its aspect repo)"
 
@@ -17,28 +21,28 @@ description = "aspect way-a (membership; defined in its aspect repo)"
 name           = "wamp-proto"
 slug           = "wamp-proto/wamp-proto"
 default_branch = "master"
-cohorts        = ["way-a"]
+cohorts        = ["way-a", "gh-actions"]
 
 [[repo]]
 name           = "wamp-cicd"
 slug           = "wamp-proto/wamp-cicd"
 default_branch = "main"
-cohorts        = ["way-a"]
+cohorts        = ["way-a", "gh-actions"]
 
 [[repo]]
 name           = "wamp-ai"
 slug           = "wamp-proto/wamp-ai"
 default_branch = "main"
-cohorts        = ["way-a", "aspect-repo"]
+cohorts        = ["way-a", "gh-actions", "aspect-repo"]
 
 [[repo]]
 name           = "wamp-site-gen"
 slug           = "wamp-proto/wamp-site-gen"
 default_branch = "main"
-cohorts        = ["way-a"]
+cohorts        = ["way-a", "gh-actions"]
 
 [[repo]]
 name           = "wamp-fleet"
 slug           = "wamp-proto/wamp-fleet"
 default_branch = "main"
-cohorts        = ["way-a", "fleet-repo"]
+cohorts        = ["way-a", "gh-actions", "fleet-repo"]
